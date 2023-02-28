@@ -20,7 +20,6 @@ const signUp = async (req, res, next) => {
     name: name,
     id: nanoid(10),
   };
-
   sequelize
     .sync()
     .then(async () => {
@@ -53,7 +52,7 @@ const signIn = async (req, res, next) => {
     .then(async () => {
       const dbQuery = await Profiles.findOne({
         where: {
-          Email: email,
+          email: email,
         },
       })
         .then((sqlRes) => {
