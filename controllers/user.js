@@ -8,6 +8,7 @@ const { requiredValues } = require("../utils/filterObj");
 const { NotFound } = require("../errors/notFound");
 const { Conflict } = require("../errors/conflict");
 const { Unauthorized } = require("../errors/unauthorized");
+const { Forbidden } = require("../errors/forbidden");
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -56,11 +57,17 @@ const signIn = async (req, res, next) => {
         },
       })
         .then((sqlRes) => {
+          if (!sqlRes) {
+            return next(new Forbidden("User not exist"));
+          };
           return sqlRes.dataValues;
         })
         .catch((error) => {
           return next(error);
         });
+      if (!dbQuery) {
+        return next(new Forbidden("User not exist"));
+      };
       const { password: hash, id } = dbQuery;
       bcrypt.compare(password, hash, (err, match) => {
         if (!match) {
@@ -75,7 +82,7 @@ const signIn = async (req, res, next) => {
       });
     })
     .catch((error) => {
-      console.error("Unable to create table : ", error);
+      console.error("Unable to create table");
     });
 };
 

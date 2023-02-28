@@ -17,6 +17,7 @@ const auth = async (req, res, next) => {
   } catch (err) {
     return next(new Unauthorized('Invalid token'));
   }
+  console.log(payload);
   sequelize
     .sync()
     .then(async () => {
@@ -26,8 +27,8 @@ const auth = async (req, res, next) => {
         },
       })
       .then((sqlRes) => {
-        if (sqlRes == null) {
-          return next(new NotFound('User not found'));
+        if (!sqlRes) {
+          return next(new Unauthorized('Invalid token'));
         }
         req.user = payload;
         return next();
