@@ -2,7 +2,7 @@ const multer = require("multer");
 const path = require("path");
 
 const { mimetypes, format } = require('../consts/validValues');
-const { BadRequest } = require('../errors/badrequest');
+const { BadRequest } = require('../errors/badRequest');
 
 const fileFilter = (req, file, callback) => {
   const fileSize = parseInt(req.headers["content-length"])
