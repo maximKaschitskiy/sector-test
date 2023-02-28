@@ -32,7 +32,7 @@ app.use("/profiles", auth, profilesRouter);
 app.use(errors());
 
 app.use((req, res, next) => {
-  return next(new NotFound("Не найдено"));
+  return next(new NotFound("Not found"));
 });
 
 app.use(errorMiddleware);

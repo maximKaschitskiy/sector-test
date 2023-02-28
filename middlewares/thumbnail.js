@@ -3,21 +3,21 @@ const sharp = require("sharp");
 const generateThumbnail = (req, res, next) => {
   if (req.files) {
     if (Object.keys(req.files).length !== 0) {
-      let { file } = req.files;
-      file = file[0];
-      if (file) {
+      let { photo } = req.files;
+      photo = photo[0];
+      if (photo) {
         try {
-          sharp(file.path)
+          sharp(photo.path)
             .resize(100, 100)
             .toFile(
-              "./uploads/thumbnails/" + file.filename,
+              "./uploads/thumbnails/" + photo.filename,
               (err, resizeImage) => {
                 if (err) {
                   return next(err);
                 }
               }
             );
-          req.thumbnail = file.filename;
+          req.thumbnail = photo.filename;
           return next();
         } catch (err) {
           return next(err);

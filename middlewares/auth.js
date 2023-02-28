@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
     .then(async () => {
       const dbQuery = await Profiles.findOne({
         where: {
-          ID: payload.ID,
+          id: payload.id,
         },
       })
       .then((sqlRes) => {

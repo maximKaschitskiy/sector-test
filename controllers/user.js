@@ -15,11 +15,10 @@ const signUp = async (req, res, next) => {
   const { email, password, name } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const query = {
-    Email: email,
-    Password: hash,
-    Name: name,
-    ID: nanoid(10),
-    RegDate: moment().format(),
+    email: email,
+    password: hash,
+    name: name,
+    id: nanoid(10),
   };
 
   sequelize
@@ -27,9 +26,10 @@ const signUp = async (req, res, next) => {
     .then(async () => {
       const dbQuery = await Profiles.create(query)
         .then((sqlRes) => {
+          const [resObj] = requiredValues([sqlRes.dataValues], reqValues);
           return res
             .status(200)
-            .send(requiredValues([sqlRes.dataValues], reqValues));
+            .send(resObj);
         })
         .catch((error) => {
           if (error.original.code === "ER_DUP_ENTRY") {
@@ -62,13 +62,13 @@ const signIn = async (req, res, next) => {
         .catch((error) => {
           return next(error);
         });
-      const { Password: hash, ID } = dbQuery;
+      const { password: hash, id } = dbQuery;
       bcrypt.compare(password, hash, (err, match) => {
         if (!match) {
           return next(new Unauthorized("Unauthorized"));
         }
         const token = jwt.sign(
-          { ID: ID },
+          { id: id },
           NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
           { expiresIn: "7d" }
         );

@@ -5,15 +5,16 @@ const format = [".png", ".jpeg", ".jpg"];
 const genders = ["male", "female"];
 
 const reqValues = [
-  "ID",
-  "Name",
-  "Surname",
-  "Email",
-  "Gender",
-  "File",
-  "RegDate",
-  "Thumbnail",
-  "Number",
+  "number",
+  "id",
+  "name",
+  "surname",
+  "email",
+  "gender",
+  "photo",
+  "thumbnail",
+  "createdAt",
+  "updatedAt",
 ];
 
 module.exports = { mimetypes, format, genders, reqValues };

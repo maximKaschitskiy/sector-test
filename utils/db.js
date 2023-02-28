@@ -27,48 +27,44 @@ const sequelize = new Sequelize(DB_NAME_MODE, DB_LOGIN_MODE, DB_PASSWORD_MODE, {
 });
 
 const Profiles = sequelize.define(DB_TABLE_MODE, {
-  Number: {
+  number: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     unique: true,
   },
-  RegDate: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  ID: {
+  id: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
-  Name: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Surname: {
+  surname: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  Email: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
-  Password: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Gender: {
+  gender: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  File: {
+  photo: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  Thumbnail: {
+  thumbnail: {
     type: DataTypes.STRING,
     allowNull: true,
   },

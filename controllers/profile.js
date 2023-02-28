@@ -8,17 +8,17 @@ const { emptyQuery } = require("../utils/emptyQuery");
 const { filledValues, requiredValues } = require("../utils/filterObj");
 
 const editProfile = async (req, res, next) => {
-  const id = req.user.ID;
+  const id = req.user.id;
   const { user, email, name, surname, gender } = req.body;
-  const { thumbnail, file } = req;
+  const { thumbnail, photo } = req;
   const query = {
-    User: user,
-    Email: email,
-    Name: name,
-    Surname: surname,
-    Gender: gender,
-    Thumbnail: thumbnail,
-    File: file,
+    user: user,
+    email: email,
+    name: name,
+    surname: surname,
+    gender: gender,
+    thumbnail: thumbnail,
+    photo: photo,
   };
   if (emptyQuery(Object.values(query))) {
     return next(new BadRequest("Empty request"));
@@ -29,20 +29,18 @@ const editProfile = async (req, res, next) => {
       const dbQuery = await Profiles.update(
         query,
         { where: {
-            ID: id,
+            id: id,
           },
         }
       )
       .then((sqlRes) => {
+        const [resObj] = requiredValues([query], reqValues);
         return res
           .status(200)
-          .send(requiredValues([query], reqValues));
+          .send(resObj);
       })
       .catch((error) => {
-        if (error.original.code === "ER_DUP_ENTRY") {
-          return next(new Conflict("User already exist"));
-        }
-        return next(error);
+        return next(error.original);
       });
     })
     .catch((error) => {
@@ -57,7 +55,7 @@ const getProfile = async (req, res, next) => {
     .then(async () => {
       const dbQuery = await Profiles.findOne({
         where: {
-          ID: id,
+          id: id,
         },
       })
       .then((sqlRes) => {
@@ -90,7 +88,7 @@ const getAllProfiles = async (req, res, next) => {
     .then(async () => {
       const dbQuery = await Profiles.findOne({
         where: {
-          ID: id,
+          id: id,
         },
         limit: limit,
         offset: offset,
