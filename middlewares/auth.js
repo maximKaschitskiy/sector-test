@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const { db, sequelize, Profiles } = require("../utils/db");
 const { JWT_MODE } = require('../utils/config.js');
 const { Unauthorized } = require('../errors/unauthorized');
-const { NotFound } = require('../errors/notFound');
 
 const auth = async (req, res, next) => {
   const { authorization } = req.headers;
