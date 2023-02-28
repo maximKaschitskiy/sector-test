@@ -64,9 +64,10 @@ const getProfile = async (req, res, next) => {
             .status(200)
             .send(requiredValues([]));
         }
+        const [resObj] = requiredValues([sqlRes.dataValues], reqValues);
         return res
           .status(200)
-          .send(requiredValues([sqlRes.dataValues], reqValues));
+          .send(resObj);
       })
       .catch((error) => {
         return next(error);
