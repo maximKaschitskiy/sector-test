@@ -12,9 +12,11 @@ const auth = require("./middlewares/auth");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 const { NotFound } = require("./errors/notFound");
 const corsMiddleware = require("./middlewares/corsMiddleware");
+const { createFolderIfNotExist } = require("./utils/fsHelpers");
 
 app.listen(PORT, () => {
   console.log(`Server was runned. Port: ${PORT}. Mode: ${NODE_ENV}. DB: ${DB_URL_MODE}`);
+  createFolderIfNotExist();
 });
 
 app.use("/uploads", express.static("uploads"));
