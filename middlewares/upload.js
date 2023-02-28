@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const { nanoid } = require("nanoid");
 const { fileFilter } = require("../middlewares/fileValidation");
-const { BadRequest } = require("../errors/badrequest");
+const { BadRequest } = require("../errors/badRequest");
 const { format } = require("../consts/validValues");
 
 const storage = multer.diskStorage({
